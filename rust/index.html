@@ -75,6 +75,25 @@
         .incorrect {
             color: red;
         }
+        .feedback-item {
+            font-size: 0.9em;
+            margin-top: 5px;
+            padding: 5px;
+            border-radius: 3px;
+        }
+        .feedback-item.correct {
+            background-color: #e6ffe6; /* Light green */
+            border: 1px solid #aaffaa;
+            color: green;
+        }
+        .feedback-item.incorrect {
+            background-color: #ffe6e6; /* Light red */
+            border: 1px solid #ffaaaa;
+            color: red;
+        }
+        .correct-answer-text {
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -84,7 +103,7 @@
 
         <form id="rustQuizForm">
 
-            <div class="question">
+            <div class="question" id="q1-container">
                 <h3>1. What is the official name of the Rust compiler?</h3>
                 <div class="options">
                     <label><input type="radio" name="q1" value="a"> RustC</label>
@@ -94,7 +113,7 @@
                 </div>
             </div>
 
-            <div class="question">
+            <div class="question" id="q2-container">
                 <h3>2. Which command is used to create a new Rust project with Cargo?</h3>
                 <div class="options">
                     <label><input type="radio" name="q2" value="a"> `rust new project`</label>
@@ -104,7 +123,7 @@
                 </div>
             </div>
 
-            <div class="question">
+            <div class="question" id="q3-container">
                 <h3>3. What is the default entry point function for a Rust executable program?</h3>
                 <div class="options">
                     <label><input type="radio" name="q3" value="a"> `start()`</label>
@@ -114,7 +133,7 @@
                 </div>
             </div>
 
-            <div class="question">
+            <div class="question" id="q4-container">
                 <h3>4. How do you print a line to the console in Rust?</h3>
                 <div class="options">
                     <label><input type="radio" name="q4" value="a"> `console.log("Hello");`</label>
@@ -124,7 +143,7 @@
                 </div>
             </div>
 
-            <div class="question">
+            <div class="question" id="q5-container">
                 <h3>5. What is `Cargo` in the Rust ecosystem?</h3>
                 <div class="options">
                     <label><input type="radio" name="q5" value="a"> The Rust debugger</label>
@@ -134,7 +153,7 @@
                 </div>
             </div>
 
-            <div class="question">
+            <div class="question" id="q6-container">
                 <h3>6. Which keyword is used to declare an immutable variable in Rust?</h3>
                 <div class="options">
                     <label><input type="radio" name="q6" value="a"> `var`</label>
@@ -144,7 +163,7 @@
                 </div>
             </div>
 
-            <div class="question">
+            <div class="question" id="q7-container">
                 <h3>7. How do you make a variable mutable in Rust?</h3>
                 <div class="options">
                     <label><input type="radio" name="q7" value="a"> By using the `mutable` keyword</label>
@@ -154,7 +173,7 @@
                 </div>
             </div>
 
-            <div class="question">
+            <div class="question" id="q8-container">
                 <h3>8. What is a "slice" in Rust?</h3>
                 <div class="options">
                     <label><input type="radio" name="q8" value="a"> A fixed-size array</label>
@@ -164,7 +183,7 @@
                 </div>
             </div>
 
-            <div class="question">
+            <div class="question" id="q9-container">
                 <h3>9. Which of these is NOT a primitive integer type in Rust?</h3>
                 <div class="options">
                     <label><input type="radio" name="q9" value="a"> `i32`</label>
@@ -174,7 +193,7 @@
                 </div>
             </div>
 
-            <div class="question">
+            <div class="question" id="q10-container">
                 <h3>10. What is a "tuple" in Rust?</h3>
                 <div class="options">
                     <label><input type="radio" name="q10" value="a"> A collection of elements of the same type</label>
@@ -184,7 +203,7 @@
                 </div>
             </div>
 
-            <div class="question">
+            <div class="question" id="q11-container">
                 <h3>11. How do you declare a function in Rust?</h3>
                 <div class="options">
                     <label><input type="radio" name="q11" value="a"> `function my_func() {}`</label>
@@ -194,7 +213,7 @@
                 </div>
             </div>
 
-            <div class="question">
+            <div class="question" id="q12-container">
                 <h3>12. What does `->` signify in a function signature?</h3>
                 <div class="options">
                     <label><input type="radio" name="q12" value="a"> It indicates the function takes no arguments</label>
@@ -204,7 +223,7 @@
                 </div>
             </div>
 
-            <div class="question">
+            <div class="question" id="q13-container">
                 <h3>13. Which concept is central to Rust's memory safety guarantees without a garbage collector?</h3>
                 <div class="options">
                     <label><input type="radio" name="q13" value="a"> Pointers</label>
@@ -214,7 +233,7 @@
                 </div>
             </div>
 
-            <div class="question">
+            <div class="question" id="q14-container">
                 <h3>14. What is the purpose of `if let` expressions in Rust?</h3>
                 <div class="options">
                     <label><input type="radio" name="q14" value="a"> To declare a variable and assign it a value</label>
@@ -224,7 +243,7 @@
                 </div>
             </div>
 
-            <div class="question">
+            <div class="question" id="q15-container">
                 <h3>15. How do you create an array in Rust?</h3>
                 <div class="options">
                     <label><input type="radio" name="q15" value="a"> `let arr = [1, 2, 3];`</label>
@@ -234,7 +253,7 @@
                 </div>
             </div>
 
-            <div class="question">
+            <div class="question" id="q16-container">
                 <h3>16. What does the `&` symbol usually denote in Rust?</h3>
                 <div class="options">
                     <label><input type="radio" name="q16" value="a"> A mutable variable</label>
@@ -244,7 +263,7 @@
                 </div>
             </div>
 
-            <div class="question">
+            <div class="question" id="q17-container">
                 <h3>17. What is the type of a string literal, e.g., `"Hello, world!"`?</h3>
                 <div class="options">
                     <label><input type="radio" name="q17" value="a"> `String`</label>
@@ -254,7 +273,7 @@
                 </div>
             </div>
 
-            <div class="question">
+            <div class="question" id="q18-container">
                 <h3>18. How do you convert a `&str` to a `String`?</h3>
                 <div class="options">
                     <label><input type="radio" name="q18" value="a"> Using `to_string()` method</label>
@@ -264,7 +283,7 @@
                 </div>
             </div>
 
-            <div class="question">
+            <div class="question" id="q19-container">
                 <h3>19. What is a "struct" in Rust?</h3>
                 <div class="options">
                     <label><input type="radio" name="q19" value="a"> A collection type like a vector</label>
@@ -274,7 +293,7 @@
                 </div>
             </div>
 
-            <div class="question">
+            <div class="question" id="q20-container">
                 <h3>20. Which of these is the correct way to define an `enum`?</h3>
                 <div class="options">
                     <label><input type="radio" name="q20" value="a"> `enum Direction { North, East, South, West };`</label>
@@ -284,7 +303,7 @@
                 </div>
             </div>
 
-            <div class="question">
+            <div class="question" id="q21-container">
                 <h3>21. What is the primary purpose of the `match` control flow operator?</h3>
                 <div class="options">
                     <label><input type="radio" name="q21" value="a"> For simple true/false conditions</label>
@@ -294,7 +313,7 @@
                 </div>
             </div>
 
-            <div class="question">
+            <div class="question" id="q22-container">
                 <h3>22. What is an "Option" enum in Rust?</h3>
                 <div class="options">
                     <label><input type="radio" name="q22" value="a"> Used for asynchronous operations</label>
@@ -304,7 +323,7 @@
                 </div>
             </div>
 
-            <div class="question">
+            <div class="question" id="q23-container">
                 <h3>23. How do you loop indefinitely in Rust?</h3>
                 <div class="options">
                     <label><input type="radio" name="q23" value="a"> `while true {}`</label>
@@ -314,7 +333,7 @@
                 </div>
             </div>
 
-            <div class="question">
+            <div class="question" id="q24-container">
                 <h3>24. What does the `.` operator do when accessing fields of a struct?</h3>
                 <div class="options">
                     <label><input type="radio" name="q24" value="a"> It de-references a pointer</label>
@@ -324,7 +343,7 @@
                 </div>
             </div>
 
-            <div class="question">
+            <div class="question" id="q25-container">
                 <h3>25. Which command compiles and runs a Rust project using Cargo?</h3>
                 <div class="options">
                     <label><input type="radio" name="q25" value="a"> `cargo build && cargo exec`</label>
@@ -342,6 +361,9 @@
             <p>You scored <span id="score">0</span> out of <span id="totalQuestions">25</span>!</p>
             <p id="percentage"></p>
             <p id="feedback"></p>
+            <div id="wrongAnswersFeedback">
+                <!-- Wrong answers details will be inserted here -->
+            </div>
         </div>
 
     </div>
@@ -353,6 +375,36 @@
         const totalQuestionsSpan = document.getElementById('totalQuestions');
         const percentageSpan = document.getElementById('percentage');
         const feedbackParagraph = document.getElementById('feedback');
+        const wrongAnswersFeedbackDiv = document.getElementById('wrongAnswersFeedback');
+
+        // Store full text of options for displaying correct answers
+        const questionOptionsText = {
+            q1: { a: 'RustC', b: 'CargoC', c: 'Rustling', d: 'Rusty Compiler' },
+            q2: { a: '`rust new project`', b: '`cargo init project`', c: '`cargo new project`', d: '`create new project`' },
+            q3: { a: '`start()`', b: '`main()`', c: '`run()`', d: '`entry()`' },
+            q4: { a: '`console.log("Hello");`', b: '`print_line("Hello");`', c: '`println!("Hello");`', d: '`echo "Hello";`' },
+            q5: { a: 'The Rust debugger', b: 'The Rust package manager and build system', c: 'The Rust standard library', d: 'The Rust official IDE' },
+            q6: { a: '`var`', b: '`let`', c: '`const`', d: '`imm`' },
+            q7: { a: 'By using the `mutable` keyword', b: 'By using the `mut` keyword', c: 'Variables are mutable by default', d: 'By using the `var` keyword' },
+            q8: { a: 'A fixed-size array', b: 'A reference to a contiguous sequence of elements in a collection', c: 'A dynamically sized vector', d: 'A type of string literal' },
+            q9: { a: '`i32`', b: '`u64`', c: '`int`', d: '`isize`' },
+            q10: { a: 'A collection of elements of the same type', b: 'A fixed-size grouping of values of different types', c: 'A dynamic array', d: 'A structured data type with named fields' },
+            q11: { a: '`function my_func() {}`', b: '`def my_func():`', c: '`fn my_func() {}`', d: '`func my_func() {}`' },
+            q12: { a: 'It indicates the function takes no arguments', b: 'It indicates the function returns a value of the specified type', c: 'It indicates a reference parameter', d: 'It\'s used for type casting' },
+            q13: { a: 'Pointers', b: 'Smart pointers', c: 'Ownership and borrowing', d: 'Reference counting' },
+            q14: { a: 'To declare a variable and assign it a value', b: 'To conditionally assign a value to a mutable variable', c: 'To combine `if` and `match` into a less verbose way to handle a single match arm', d: 'To create a new scope for a variable' },
+            q15: { a: '`let arr = [1, 2, 3];`', b: '`let arr: array<i32> = [1, 2, 3];`', c: '`let arr = new Array(1, 2, 3);`', d: '`let arr = vec![1, 2, 3];`' },
+            q16: { a: 'A mutable variable', b: 'An integer literal', c: 'A reference (borrow)', d: 'An arithmetic operator' },
+            q17: { a: '`String`', b: '`str`', c: '`&String`', d: '`&str`' },
+            q18: { a: 'Using `to_string()` method', b: 'Using `String::from()` function', c: 'Both a and b', d: 'It\'s not possible to convert them' },
+            q19: { a: 'A collection type like a vector', b: 'A custom data type that lets you name and package together multiple related values', c: 'A function that returns a structure', d: 'A pointer to a data block' },
+            q20: { a: '`enum Direction { North, East, South, West };`', b: '`enum Direction { North, East, South, West }`', c: '`enum Direction = [North, East, South, West];`', d: '`Enum Direction { North, East, South, West };`' },
+            q21: { a: 'For simple true/false conditions', b: 'To iterate over collections', c: 'To compare a value against a series of patterns and execute code based on which pattern matches', d: 'To handle potential errors' },
+            q22: { a: 'Used for asynchronous operations', b: 'Represents the possibility of something being either `Some` value or `None`', c: 'A way to define optional function arguments', d: 'A type for command-line arguments' },
+            q23: { a: '`while true {}`', b: '`loop {}`', c: '`for ;; {}`', d: '`infinite {}`' },
+            q24: { a: 'It de-references a pointer', b: 'It indicates a method call', c: 'It allows direct access to named fields of a struct or enum variant', d: 'It\'s used for range iteration' },
+            q25: { a: '`cargo build && cargo exec`', b: '`cargo run`', c: '`rustc main.rs && ./main`', d: '`cargo start`' }
+        };
 
         const correctAnswers = {
             q1: 'a', // RustC
@@ -387,11 +439,52 @@
 
             let score = 0;
             const totalQuestions = Object.keys(correctAnswers).length;
+            const wrongAnswers = [];
 
-            for (const questionId in correctAnswers) {
-                const selectedOption = document.querySelector(`input[name="${questionId}"]:checked`);
-                if (selectedOption && selectedOption.value === correctAnswers[questionId]) {
+            // Clear previous feedback
+            wrongAnswersFeedbackDiv.innerHTML = '';
+            // Reset question styling
+            document.querySelectorAll('.question').forEach(q => {
+                q.classList.remove('correct-question', 'incorrect-question');
+            });
+            document.querySelectorAll('.feedback-item').forEach(item => item.remove());
+
+
+            for (const i in correctAnswers) {
+                const questionNumber = parseInt(i.replace('q', ''));
+                const selectedOption = document.querySelector(`input[name="${i}"]:checked`);
+                const questionContainer = document.getElementById(`${i}-container`); // Get the question's container
+
+                let isCorrect = false;
+                if (selectedOption && selectedOption.value === correctAnswers[i]) {
                     score++;
+                    isCorrect = true;
+                }
+
+                if (!isCorrect) {
+                    const correctAnswerValue = correctAnswers[i];
+                    const correctAnswerText = questionOptionsText[i][correctAnswerValue];
+                    let userAnswerText = 'No answer selected';
+                    if (selectedOption) {
+                        userAnswerText = questionOptionsText[i][selectedOption.value];
+                    }
+
+                    wrongAnswers.push({
+                        questionNum: questionNumber,
+                        questionText: questionContainer.querySelector('h3').textContent,
+                        userAnswer: userAnswerText,
+                        correctAnswer: correctAnswerText
+                    });
+
+                    // Add incorrect styling to the question container
+                    if (questionContainer) {
+                        questionContainer.classList.add('incorrect-question');
+                    }
+                } else {
+                    // Add correct styling to the question container
+                    if (questionContainer) {
+                        questionContainer.classList.add('correct-question');
+                    }
                 }
             }
 
@@ -410,6 +503,29 @@
                 feedbackParagraph.textContent = "You might want to review the basics of Rust. Don't worry, practice makes perfect!";
                 feedbackParagraph.className = "incorrect";
             }
+
+            if (wrongAnswers.length > 0) {
+                const wrongAnswersTitle = document.createElement('h3');
+                wrongAnswersTitle.textContent = "Questions You Got Wrong:";
+                wrongAnswersFeedbackDiv.appendChild(wrongAnswersTitle);
+
+                wrongAnswers.forEach(item => {
+                    const feedbackItem = document.createElement('div');
+                    feedbackItem.classList.add('feedback-item', 'incorrect');
+                    feedbackItem.innerHTML = `
+                        <p><strong>Question ${item.questionNum}:</strong> ${item.questionText}</p>
+                        <p>Your Answer: ${item.userAnswer}</p>
+                        <p>Correct Answer: <span class="correct-answer-text">${item.correctAnswer}</span></p>
+                    `;
+                    wrongAnswersFeedbackDiv.appendChild(feedbackItem);
+                });
+            } else {
+                const allCorrectMessage = document.createElement('p');
+                allCorrectMessage.textContent = "You got all questions correct! Amazing!";
+                allCorrectMessage.classList.add('feedback-item', 'correct');
+                wrongAnswersFeedbackDiv.appendChild(allCorrectMessage);
+            }
+
 
             quizResults.style.display = 'block'; // Show results
             quizResults.scrollIntoView({ behavior: 'smooth' }); // Scroll to results
