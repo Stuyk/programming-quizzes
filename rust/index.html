@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rust Programming Basics Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .quiz-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin: auto;
+        }
+        h1 {
+            color: #de6a0e; /* Rust orange */
+            text-align: center;
+        }
+        .question {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .question h3 {
+            margin-top: 0;
+            color: #000;
+        }
+        .options label {
+            display: block;
+            margin-bottom: 8px;
+            cursor: pointer;
+        }
+        .options input[type="radio"] {
+            margin-right: 10px;
+        }
+        .submit-btn {
+            display: block;
+            width: 200px;
+            padding: 10px;
+            margin: 30px auto;
+            background-color: #de6a0e; /* Rust orange */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .submit-btn:hover {
+            background-color: #c05b0b;
+        }
+        .results {
+            margin-top: 30px;
+            padding: 20px;
+            border-top: 2px solid #de6a0e;
+            text-align: center;
+            font-size: 1.2em;
+            display: none; /* Hidden by default */
+        }
+        .results p {
+            margin: 10px 0;
+        }
+        .correct {
+            color: green;
+        }
+        .incorrect {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="quiz-container">
+        <h1>Rust Programming Basics Quiz</h1>
+
+        <form id="rustQuizForm">
+
+            <div class="question">
+                <h3>1. What is the official name of the Rust compiler?</h3>
+                <div class="options">
+                    <label><input type="radio" name="q1" value="a"> RustC</label>
+                    <label><input type="radio" name="q1" value="b"> CargoC</label>
+                    <label><input type="radio" name="q1" value="c"> Rustling</label>
+                    <label><input type="radio" name="q1" value="d"> Rusty Compiler</label>
+                </div>
+            </div>
+
+            <div class="question">
+                <h3>2. Which command is used to create a new Rust project with Cargo?</h3>
+                <div class="options">
+                    <label><input type="radio" name="q2" value="a"> `rust new project`</label>
+                    <label><input type="radio" name="q2" value="b"> `cargo init project`</label>
+                    <label><input type="radio" name="q2" value="c"> `cargo new project`</label>
+                    <label><input type="radio" name="q2" value="d"> `create new project`</label>
+                </div>
+            </div>
+
+            <div class="question">
+                <h3>3. What is the default entry point function for a Rust executable program?</h3>
+                <div class="options">
+                    <label><input type="radio" name="q3" value="a"> `start()`</label>
+                    <label><input type="radio" name="q3" value="b"> `main()`</label>
+                    <label><input type="radio" name="q3" value="c"> `run()`</label>
+                    <label><input type="radio" name="q3" value="d"> `entry()`</label>
+                </div>
+            </div>
+
+            <div class="question">
+                <h3>4. How do you print a line to the console in Rust?</h3>
+                <div class="options">
+                    <label><input type="radio" name="q4" value="a"> `console.log("Hello");`</label>
+                    <label><input type="radio" name="q4" value="b"> `print_line("Hello");`</label>
+                    <label><input type="radio" name="q4" value="c"> `println!("Hello");`</label>
+                    <label><input type="radio" name="q4" value="d"> `echo "Hello";`</label>
+                </div>
+            </div>
+
+            <div class="question">
+                <h3>5. What is `Cargo` in the Rust ecosystem?</h3>
+                <div class="options">
+                    <label><input type="radio" name="q5" value="a"> The Rust debugger</label>
+                    <label><input type="radio" name="q5" value="b"> The Rust package manager and build system</label>
+                    <label><input type="radio" name="q5" value="c"> The Rust standard library</label>
+                    <label><input type="radio" name="q5" value="d"> The Rust official IDE</label>
+                </div>
+            </div>
+
+            <div class="question">
+                <h3>6. Which keyword is used to declare an immutable variable in Rust?</h3>
+                <div class="options">
+                    <label><input type="radio" name="q6" value="a"> `var`</label>
+                    <label><input type="radio" name="q6" value="b"> `let`</label>
+                    <label><input type="radio" name="q6" value="c"> `const`</label>
+                    <label><input type="radio" name="q6" value="d"> `imm`</label>
+                </div>
+            </div>
+
+            <div class="question">
+                <h3>7. How do you make a variable mutable in Rust?</h3>
+                <div class="options">
+                    <label><input type="radio" name="q7" value="a"> By using the `mutable` keyword</label>
+                    <label><input type="radio" name="q7" value="b"> By using the `mut` keyword</label>
+                    <label><input type="radio" name="q7" value="c"> Variables are mutable by default</label>
+                    <label><input type="radio" name="q7" value="d"> By using the `var` keyword</label>
+                </div>
+            </div>
+
+            <div class="question">
+                <h3>8. What is a "slice" in Rust?</h3>
+                <div class="options">
+                    <label><input type="radio" name="q8" value="a"> A fixed-size array</label>
+                    <label><input type="radio" name="q8" value="b"> A reference to a contiguous sequence of elements in a collection</label>
+                    <label><input type="radio" name="q8" value="c"> A dynamically sized vector</label>
+                    <label><input type="radio" name="q8" value="d"> A type of string literal</label>
+                </div>
+            </div>
+
+            <div class="question">
+                <h3>9. Which of these is NOT a primitive integer type in Rust?</h3>
+                <div class="options">
+                    <label><input type="radio" name="q9" value="a"> `i32`</label>
+                    <label><input type="radio" name="q9" value="b"> `u64`</label>
+                    <label><input type="radio" name="q9" value="c"> `int`</label>
+                    <label><input type="radio" name="q9" value="d"> `isize`</label>
+                </div>
+            </div>
+
+            <div class="question">
+                <h3>10. What is a "tuple" in Rust?</h3>
+                <div class="options">
+                    <label><input type="radio" name="q10" value="a"> A collection of elements of the same type</label>
+                    <label><input type="radio" name="q10" value="b"> A fixed-size grouping of values of different types</label>
+                    <label><input type="radio" name="q10" value="c"> A dynamic array</label>
+                    <label><input type="radio" name="q10" value="d"> A structured data type with named fields</label>
+                </div>
+            </div>
+
+            <div class="question">
+                <h3>11. How do you declare a function in Rust?</h3>
+                <div class="options">
+                    <label><input type="radio" name="q11" value="a"> `function my_func() {}`</label>
+                    <label><input type="radio" name="q11" value="b"> `def my_func():`</label>
+                    <label><input type="radio" name="q11" value="c"> `fn my_func() {}`</label>
+                    <label><input type="radio" name="q11" value="d"> `func my_func() {}`</label>
+                </div>
+            </div>
+
+            <div class="question">
+                <h3>12. What does `->` signify in a function signature?</h3>
+                <div class="options">
+                    <label><input type="radio" name="q12" value="a"> It indicates the function takes no arguments</label>
+                    <label><input type="radio" name="q12" value="b"> It indicates the function returns a value of the specified type</label>
+                    <label><input type="radio" name="q12" value="c"> It indicates a reference parameter</label>
+                    <label><input type="radio" name="q12" value="d"> It's used for type casting</label>
+                </div>
+            </div>
+
+            <div class="question">
+                <h3>13. Which concept is central to Rust's memory safety guarantees without a garbage collector?</h3>
+                <div class="options">
+                    <label><input type="radio" name="q13" value="a"> Pointers</label>
+                    <label><input type="radio" name="q13" value="b"> Smart pointers</label>
+                    <label><input type="radio" name="q13" value="c"> Ownership and borrowing</label>
+                    <label><input type="radio" name="q13" value="d"> Reference counting</label>
+                </div>
+            </div>
+
+            <div class="question">
+                <h3>14. What is the purpose of `if let` expressions in Rust?</h3>
+                <div class="options">
+                    <label><input type="radio" name="q14" value="a"> To declare a variable and assign it a value</label>
+                    <label><input type="radio" name="q14" value="b"> To conditionally assign a value to a mutable variable</label>
+                    <label><input type="radio" name="q14" value="c"> To combine `if` and `match` into a less verbose way to handle a single match arm</label>
+                    <label><input type="radio" name="q14" value="d"> To create a new scope for a variable</label>
+                </div>
+            </div>
+
+            <div class="question">
+                <h3>15. How do you create an array in Rust?</h3>
+                <div class="options">
+                    <label><input type="radio" name="q15" value="a"> `let arr = [1, 2, 3];`</label>
+                    <label><input type="radio" name="q15" value="b"> `let arr: array<i32> = [1, 2, 3];`</label>
+                    <label><input type="radio" name="q15" value="c"> `let arr = new Array(1, 2, 3);`</label>
+                    <label><input type="radio" name="q15" value="d"> `let arr = vec![1, 2, 3];`</label>
+                </div>
+            </div>
+
+            <div class="question">
+                <h3>16. What does the `&` symbol usually denote in Rust?</h3>
+                <div class="options">
+                    <label><input type="radio" name="q16" value="a"> A mutable variable</label>
+                    <label><input type="radio" name="q16" value="b"> An integer literal</label>
+                    <label><input type="radio" name="q16" value="c"> A reference (borrow)</label>
+                    <label><input type="radio" name="q16" value="d"> An arithmetic operator</label>
+                </div>
+            </div>
+
+            <div class="question">
+                <h3>17. What is the type of a string literal, e.g., `"Hello, world!"`?</h3>
+                <div class="options">
+                    <label><input type="radio" name="q17" value="a"> `String`</label>
+                    <label><input type="radio" name="q17" value="b"> `str`</label>
+                    <label><input type="radio" name="q17" value="c"> `&String`</label>
+                    <label><input type="radio" name="q17" value="d"> `&str`</label>
+                </div>
+            </div>
+
+            <div class="question">
+                <h3>18. How do you convert a `&str` to a `String`?</h3>
+                <div class="options">
+                    <label><input type="radio" name="q18" value="a"> Using `to_string()` method</label>
+                    <label><input type="radio" name="q18" value="b"> Using `String::from()` function</label>
+                    <label><input type="radio" name="q18" value="c"> Both a and b</label>
+                    <label><input type="radio" name="q18" value="d"> It's not possible to convert them</label>
+                </div>
+            </div>
+
+            <div class="question">
+                <h3>19. What is a "struct" in Rust?</h3>
+                <div class="options">
+                    <label><input type="radio" name="q19" value="a"> A collection type like a vector</label>
+                    <label><input type="radio" name="q19" value="b"> A custom data type that lets you name and package together multiple related values</label>
+                    <label><input type="radio" name="q19" value="c"> A function that returns a structure</label>
+                    <label><input type="radio" name="q19" value="d"> A pointer to a data block</label>
+                </div>
+            </div>
+
+            <div class="question">
+                <h3>20. Which of these is the correct way to define an `enum`?</h3>
+                <div class="options">
+                    <label><input type="radio" name="q20" value="a"> `enum Direction { North, East, South, West };`</label>
+                    <label><input type="radio" name="q20" value="b"> `enum Direction { North, East, South, West }`</label>
+                    <label><input type="radio" name="q20" value="c"> `enum Direction = [North, East, South, West];`</label>
+                    <label><input type="radio" name="q20" value="d"> `Enum Direction { North, East, South, West };`</label>
+                </div>
+            </div>
+
+            <div class="question">
+                <h3>21. What is the primary purpose of the `match` control flow operator?</h3>
+                <div class="options">
+                    <label><input type="radio" name="q21" value="a"> For simple true/false conditions</label>
+                    <label><input type="radio" name="q21" value="b"> To iterate over collections</label>
+                    <label><input type="radio" name="q21" value="c"> To compare a value against a series of patterns and execute code based on which pattern matches</label>
+                    <label><input type="radio" name="q21" value="d"> To handle potential errors</label>
+                </div>
+            </div>
+
+            <div class="question">
+                <h3>22. What is an "Option" enum in Rust?</h3>
+                <div class="options">
+                    <label><input type="radio" name="q22" value="a"> Used for asynchronous operations</label>
+                    <label><input type="radio" name="q22" value="b"> Represents the possibility of something being either `Some` value or `None`</label>
+                    <label><input type="radio" name="q22" value="c"> A way to define optional function arguments</label>
+                    <label><input type="radio" name="q22" value="d"> A type for command-line arguments</label>
+                </div>
+            </div>
+
+            <div class="question">
+                <h3>23. How do you loop indefinitely in Rust?</h3>
+                <div class="options">
+                    <label><input type="radio" name="q23" value="a"> `while true {}`</label>
+                    <label><input type="radio" name="q23" value="b"> `loop {}`</label>
+                    <label><input type="radio" name="q23" value="c"> `for ;; {}`</label>
+                    <label><input type="radio" name="q23" value="d"> `infinite {}`</label>
+                </div>
+            </div>
+
+            <div class="question">
+                <h3>24. What does the `.` operator do when accessing fields of a struct?</h3>
+                <div class="options">
+                    <label><input type="radio" name="q24" value="a"> It de-references a pointer</label>
+                    <label><input type="radio" name="q24" value="b"> It indicates a method call</label>
+                    <label><input type="radio" name="q24" value="c"> It allows direct access to named fields of a struct or enum variant</label>
+                    <label><input type="radio" name="q24" value="d"> It's used for range iteration</label>
+                </div>
+            </div>
+
+            <div class="question">
+                <h3>25. Which command compiles and runs a Rust project using Cargo?</h3>
+                <div class="options">
+                    <label><input type="radio" name="q25" value="a"> `cargo build && cargo exec`</label>
+                    <label><input type="radio" name="q25" value="b"> `cargo run`</label>
+                    <label><input type="radio" name="q25" value="c"> `rustc main.rs && ./main`</label>
+                    <label><input type="radio" name="q25" value="d"> `cargo start`</label>
+                </div>
+            </div>
+
+            <button type="submit" class="submit-btn">Submit Quiz</button>
+        </form>
+
+        <div class="results" id="quizResults">
+            <h2>Quiz Results</h2>
+            <p>You scored <span id="score">0</span> out of <span id="totalQuestions">25</span>!</p>
+            <p id="percentage"></p>
+            <p id="feedback"></p>
+        </div>
+
+    </div>
+
+    <script>
+        const quizForm = document.getElementById('rustQuizForm');
+        const quizResults = document.getElementById('quizResults');
+        const scoreSpan = document.getElementById('score');
+        const totalQuestionsSpan = document.getElementById('totalQuestions');
+        const percentageSpan = document.getElementById('percentage');
+        const feedbackParagraph = document.getElementById('feedback');
+
+        const correctAnswers = {
+            q1: 'a', // RustC
+            q2: 'c', // cargo new project
+            q3: 'b', // main()
+            q4: 'c', // println!("Hello");
+            q5: 'b', // The Rust package manager and build system
+            q6: 'b', // let
+            q7: 'b', // By using the mut keyword
+            q8: 'b', // A reference to a contiguous sequence of elements in a collection
+            q9: 'c', // int
+            q10: 'b', // A fixed-size grouping of values of different types
+            q11: 'c', // fn my_func() {}
+            q12: 'b', // It indicates the function returns a value of the specified type
+            q13: 'c', // Ownership and borrowing
+            q14: 'c', // To combine if and match into a less verbose way to handle a single match arm
+            q15: 'a', // let arr = [1, 2, 3];
+            q16: 'c', // A reference (borrow)
+            q17: 'd', // &str
+            q18: 'c', // Both a and b
+            q19: 'b', // A custom data type that lets you name and package together multiple related values
+            q20: 'b', // enum Direction { North, East, South, West }
+            q21: 'c', // To compare a value against a series of patterns and execute code based on which pattern matches
+            q22: 'b', // Represents the possibility of something being either Some value or None
+            q23: 'b', // loop {}
+            q24: 'c', // It allows direct access to named fields of a struct or enum variant
+            q25: 'b'  // cargo run
+        };
+
+        quizForm.addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            let score = 0;
+            const totalQuestions = Object.keys(correctAnswers).length;
+
+            for (const questionId in correctAnswers) {
+                const selectedOption = document.querySelector(`input[name="${questionId}"]:checked`);
+                if (selectedOption && selectedOption.value === correctAnswers[questionId]) {
+                    score++;
+                }
+            }
+
+            scoreSpan.textContent = score;
+            totalQuestionsSpan.textContent = totalQuestions;
+            const percentage = (score / totalQuestions) * 100;
+            percentageSpan.textContent = `(${percentage.toFixed(2)}%)`;
+
+            if (percentage >= 80) {
+                feedbackParagraph.textContent = "Excellent! You have a strong grasp of Rust basics.";
+                feedbackParagraph.className = "correct";
+            } else if (percentage >= 50) {
+                feedbackParagraph.textContent = "Good job! Keep practicing to improve your Rust knowledge.";
+                feedbackParagraph.className = "";
+            } else {
+                feedbackParagraph.textContent = "You might want to review the basics of Rust. Don't worry, practice makes perfect!";
+                feedbackParagraph.className = "incorrect";
+            }
+
+            quizResults.style.display = 'block'; // Show results
+            quizResults.scrollIntoView({ behavior: 'smooth' }); // Scroll to results
+        });
+    </script>
+
+</body>
+</html>
