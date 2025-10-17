@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rust Beginner Quiz (20 Questions)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Basic styling for drag-and-drop placeholders */
+        .drop-target {
+            min-width: 80px;
+            height: 32px;
+            border: 1px dashed #6b7280; /* gray-400 */
+            background-color: #f3f4f6; /* gray-100 */
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-family: monospace;
+            padding: 0 8px;
+            margin: 0 4px;
+            border-radius: 4px;
+            color: #4b5563; /* text-gray-700 */
+            font-weight: bold;
+            transition: background-color 0.2s ease, border-color 0.2s ease;
+            position: relative;
+        }
+        .drop-target.hover {
+            background-color: #e0f2fe; /* blue-50 */
+            border-color: #38b2ac; /* teal-400 */
+        }
+        .draggable-item {
+            cursor: grab;
+            user-select: none;
+            transition: transform 0.1s ease-out;
+            box-sizing: border-box;
+            line-height: 1;
+            white-space: nowrap;
+        }
+        .draggable-item:active {
+            cursor: grabbing;
+        }
+        /* Style for correct/incorrect answers */
+        .drop-target.correct {
+            background-color: #d1fae5; /* green-100 */
+            border-color: #34d399; /* green-400 */
+        }
+        .drop-target.incorrect {
+            background-color: #fee2e2; /* red-100 */
+            border-color: #ef4444; /* red-500 */
+        }
+
+        /* Style for items when they are inside a drop target */
+        .drop-target > .dropped-item {
+            background-color: #dbeafe; /* blue-100, a lighter blue */
+            color: #1e40af; /* blue-800 */
+            border: 1px solid #93c5fd; /* blue-300 */
+            height: 100%;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9em;
+            padding: 0 4px;
+            cursor: grab; /* Make dropped items draggable too */
+        }
+
+        /* Style for original draggable items in the pool */
+        .draggable-item.original-pool-item {
+            background-color: #bfdbfe; /* blue-200 */
+            color: #1e40af; /* blue-800 */
+            border: 1px solid transparent;
+        }
+
+        /* Styling for the drag ghost (optional, but good for visual) */
+        .dragging {
+            opacity: 0.5;
+            border: 2px dashed #3b82f6; /* blue-500 */
+        }
+    </style>
+</head>
+<body class="bg-gray-50 flex flex-col items-center min-h-screen pt-20 pb-4 px-4"> <!-- Adjusted pt-20 -->
+    <div class="bg-white p-8 rounded-lg shadow-xl w-full max-w-4xl">
+        <h1 class="text-3xl font-bold text-gray-800 mb-6 text-center">Rust Beginner Syntax Quiz (20 Questions)</h1>
+        <p class="text-gray-600 mb-8 text-center">Drag and drop the correct keywords and symbols to complete the Rust code snippets!</p>
+
+        <!-- Available Draggable Items - Now Sticky! -->
+        <div id="draggable-options-wrapper" class="sticky top-0 z-10 w-full bg-white pt-4 pb-4 px-4 -mx-4 shadow-md rounded-lg"> <!-- Added wrapper for sticky -->
+            <h2 class="text-xl font-semibold text-blue-800 mb-4 text-center">Available Pieces:</h2>
+            <div id="draggable-options" class="flex flex-wrap gap-3 justify-center">
+                <!-- Draggable items will be populated by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Quiz Questions -->
+        <div id="quiz-questions" class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6 mt-8"> <!-- Added mt-8 for spacing below sticky -->
+            <!-- Question 1: Basic main function structure -->
+            <div class="p-6 bg-gray-50 rounded-lg border border-gray-200">
+                <p class="font-mono text-gray-700 text-lg">
+                    <span class="text-purple-600">Q1: Define the main function.</span>
+                    <br>
+                    <span class="drop-target" data-answer="fn"></span> <span class="drop-target" data-answer="main"></span>() {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;// Code goes here<br>
+                    }
+                </p>
+            </div>
+
+            <!-- Question 2: Printing to console -->
+            <div class="p-6 bg-gray-50 rounded-lg border border-gray-200">
+                <p class="font-mono text-gray-700 text-lg">
+                    <span class="text-purple-600">Q2: Print "Hello, Rust!" to the console.</span>
+                    <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="drop-target" data-answer="println"></span><span class="drop-target" data-answer="!"></span>(<span class="drop-target" data-answer="&quot;Hello, Rust!&quot;"></span>)<span class="drop-target" data-answer=";"></span>
+                </p>
+            </div>
+
+            <!-- Question 3: Immutable variable declaration -->
+            <div class="p-6 bg-gray-50 rounded-lg border border-gray-200">
+                <p class="font-mono text-gray-700 text-lg">
+                    <span class="text-purple-600">Q3: Declare an immutable variable `x` with value `10`.</span>
+                    <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="drop-target" data-answer="let"></span> x <span class="drop-target" data-answer="="></span> 10<span class="drop-target" data-answer=";"></span>
+                </p>
+            </div>
+
+            <!-- Question 4: Mutable variable declaration -->
+            <div class="p-6 bg-gray-50 rounded-lg border border-gray-200">
+                <p class="font-mono text-gray-700 text-lg">
+                    <span class="text-purple-600">Q4: Declare a mutable variable `y` with value `20`.</span>
+                    <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="drop-target" data-answer="let"></span> <span class="drop-target" data-answer="mut"></span> y <span class="drop-target" data-answer="="></span> 20<span class="drop-target" data-answer=";"></span>
+                </p>
+            </div>
+
+            <!-- Question 5: Basic comment -->
+            <div class="p-6 bg-gray-50 rounded-lg border border-gray-200">
+                <p class="font-mono text-gray-700 text-lg">
+                    <span class="text-purple-600">Q5: Add a single-line comment.</span>
+                    <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="drop-target" data-answer="//"></span> This is a comment
+                </p>
+            </div>
+
+            <!-- Question 6: If statement -->
+            <div class="p-6 bg-gray-50 rounded-lg border border-gray-200">
+                <p class="font-mono text-gray-700 text-lg">
+                    <span class="text-purple-600">Q6: Complete the `if` statement.</span>
+                    <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="drop-target" data-answer="if"></span> x <span class="drop-target" data-answer="=="></span> 5 {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // do something<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;}
+                </p>
+            </div>
+
+            <!-- Question 7: Else block -->
+            <div class="p-6 bg-gray-50 rounded-lg border border-gray-200">
+                <p class="font-mono text-gray-700 text-lg">
+                    <span class="text-purple-600">Q7: Add an `else` block.</span>
+                    <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;if true { } <span class="drop-target" data-answer="else"></span> {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // otherwise<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;}
+                </p>
+            </div>
+
+            <!-- Question 8: Loop keyword -->
+            <div class="p-6 bg-gray-50 rounded-lg border border-gray-200">
+                <p class="font-mono text-gray-700 text-lg">
+                    <span class="text-purple-600">Q8: Start an infinite loop.</span>
+                    <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="drop-target" data-answer="loop"></span> {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // repeat forever<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;}
+                </p>
+            </div>
+
+            <!-- Question 9: Break out of loop -->
+            <div class="p-6 bg-gray-50 rounded-lg border border-gray-200">
+                <p class="font-mono text-gray-700 text-lg">
+                    <span class="text-purple-600">Q9: Exit a loop early.</span>
+                    <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;loop { <span class="drop-target" data-answer="break"></span>;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;}
+                </p>
+            </div>
+
+            <!-- Question 10: For loop -->
+            <div class="p-6 bg-gray-50 rounded-lg border border-gray-200">
+                <p class="font-mono text-gray-700 text-lg">
+                    <span class="text-purple-600">Q10: Loop through numbers 1 to 5.</span>
+                    <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="drop-target" data-answer="for"></span> i <span class="drop-target" data-answer="in"></span> 1<span class="drop-target" data-answer=".."></span>6 {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // use i<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;}
+                </p>
+            </div>
+
+            <!-- Question 11: Match keyword -->
+            <div class="p-6 bg-gray-50 rounded-lg border border-gray-200">
+                <p class="font-mono text-gray-700 text-lg">
+                    <span class="text-purple-600">Q11: Start a pattern match.</span>
+                    <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="drop-target" data-answer="match"></span> some_value {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; _ => {}<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;}
+                </p>
+            </div>
+
+            <!-- Question 12: Struct definition -->
+            <div class="p-6 bg-gray-50 rounded-lg border border-gray-200">
+                <p class="font-mono text-gray-700 text-lg">
+                    <span class="text-purple-600">Q12: Define a struct named `Point`.</span>
+                    <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="drop-target" data-answer="struct"></span> Point {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; x: i32,<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; y: i32,<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;}
+                </p>
+            </div>
+
+            <!-- Question 13: Enum definition -->
+            <div class="p-6 bg-gray-50 rounded-lg border border-gray-200">
+                <p class="font-mono text-gray-700 text-lg">
+                    <span class="text-purple-600">Q13: Define an enum named `Color`.</span>
+                    <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="drop-target" data-answer="enum"></span> Color {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Red,<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Green,<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Blue,<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;}
+                </p>
+            </div>
+
+            <!-- Question 14: Return keyword -->
+            <div class="p-6 bg-gray-50 rounded-lg border border-gray-200">
+                <p class="font-mono text-gray-700 text-lg">
+                    <span class="text-purple-600">Q14: Explicitly return a value.</span>
+                    <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;fn get_five() -> i32 {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="drop-target" data-answer="return"></span> 5<span class="drop-target" data-answer=";"></span><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;}
+                </p>
+            </div>
+
+            <!-- Question 15: Type annotation -->
+            <div class="p-6 bg-gray-50 rounded-lg border border-gray-200">
+                <p class="font-mono text-gray-700 text-lg">
+                    <span class="text-purple-600">Q15: Annotate variable `age` as `u32`.</span>
+                    <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;let age<span class="drop-target" data-answer=":"></span> <span class="drop-target" data-answer="u32"></span> = 30<span class="drop-target" data-answer=";"></span>
+                </p>
+            </div>
+
+            <!-- Question 16: Module declaration -->
+            <div class="p-6 bg-gray-50 rounded-lg border border-gray-200">
+                <p class="font-mono text-gray-700 text-lg">
+                    <span class="text-purple-600">Q16: Declare a module named `utils`.</span>
+                    <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="drop-target" data-answer="mod"></span> utils<span class="drop-target" data-answer=";"></span>
+                </p>
+            </div>
+
+            <!-- Question 17: Use keyword -->
+            <div class="p-6 bg-gray-50 rounded-lg border border-gray-200">
+                <p class="font-mono text-gray-700 text-lg">
+                    <span class="text-purple-600">Q17: Bring `HashMap` into scope.</span>
+                    <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="drop-target" data-answer="use"></span> std<span class="drop-target" data-answer="::"></span>collections<span class="drop-target" data-answer="::"></span>HashMap<span class="drop-target" data-answer=";"></span>
+                </p>
+            </div>
+
+            <!-- Question 18: Reference operator -->
+            <div class="p-6 bg-gray-50 rounded-lg border border-gray-200">
+                <p class="font-mono text-gray-700 text-lg">
+                    <span class="text-purple-600">Q18: Pass a reference to `val`.</span>
+                    <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;fn print_ref(s: <span class="drop-target" data-answer="&"></span>String) { }<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;let val = String::from("Rust");<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;print_ref(<span class="drop-target" data-answer="&"></span>val)<span class="drop-target" data-answer=";"></span>
+                </p>
+            </div>
+
+            <!-- Question 19: Dereference operator -->
+            <div class="p-6 bg-gray-50 rounded-lg border border-gray-200">
+                <p class="font-mono text-gray-700 text-lg">
+                    <span class="text-purple-600">Q19: Dereference a pointer `ptr`.</span>
+                    <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;let num = <span class="drop-target" data-answer="*"></span>ptr<span class="drop-target" data-answer=";"></span>
+                </p>
+            </div>
+
+            <!-- Question 20: Generic type parameter -->
+            <div class="p-6 bg-gray-50 rounded-lg border border-gray-200">
+                <p class="font-mono text-gray-700 text-lg">
+                    <span class="text-purple-600">Q20: Define a function with a generic type `T`.</span>
+                    <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;fn identity<<span class="drop-target" data-answer="T"></span>>(x: <span class="drop-target" data-answer="T"></span>) -> <span class="drop-target" data-answer="T"></span> { x }
+                </p>
+            </div>
+
+        </div>
+
+        <div class="text-center mt-8 space-x-4">
+            <button id="check-answers-btn" class="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-8 rounded-lg shadow-lg transition duration-200 ease-in-out">
+                Check All Answers (Final)
+            </button>
+            <button id="reset-quiz-btn" class="bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-8 rounded-lg shadow-lg transition duration-200 ease-in-out">
+                Reset Quiz
+            </button>
+        </div>
+
+    </div>
+
+    <script>
+        const dropTargets = document.querySelectorAll('.drop-target');
+        const checkAnswersBtn = document.getElementById('check-answers-btn');
+        const resetQuizBtn = document.getElementById('reset-quiz-btn');
+        const draggableOptionsContainer = document.getElementById('draggable-options');
+
+        let draggedItemElement = null; // The actual HTML element being dragged
+
+        // Define the original set of available pieces for reset functionality
+        const originalDraggablePiecesData = [
+            { value: "fn", text: "fn" },
+            { value: "main", text: "main" },
+            { value: "!", text: "!" },
+            { value: "println", text: "println" },
+            { value: "let", text: "let" },
+            { value: "mut", text: "mut" },
+            { value: ";", text: ";" },
+            { value: "\"Hello, Rust!\"", text: "\"Hello, Rust!\"" },
+            { value: "=", text: "=" },
+            { value: "//", text: "//" },
+            { value: "if", text: "if" },
+            { value: "==", text: "==" },
+            { value: "else", text: "else" },
+            { value: "loop", text: "loop" },
+            { value: "break", text: "break" },
+            { value: "for", text: "for" },
+            { value: "in", text: "in" },
+            { value: "..", text: ".." },
+            { value: "match", text: "match" },
+            { value: "struct", text: "struct" },
+            { value: "enum", text: "enum" },
+            { value: "return", text: "return" },
+            { value: ":", text: ":" },
+            { value: "u32", text: "u32" },
+            { value: "mod", text: "mod" },
+            { value: "use", text: "use" },
+            { value: "::", text: "::" },
+            { value: "&", text: "&" },
+            { value: "*", text: "*" },
+            { value: "T", text: "T" }
+        ];
+
+        // --- Helper function to attach drag event listeners ---
+        function attachDragListeners(element) {
+            element.addEventListener('dragstart', handleDragStart);
+            element.addEventListener('dragend', handleDragEnd);
+        }
+
+        // --- Helper function to initialize/reset draggable items ---
+        function setupDraggableItems() {
+            // Clear any existing draggable items from the options container
+            draggableOptionsContainer.innerHTML = '';
+
+            // Add original items back to the pool
+            originalDraggablePiecesData.forEach(itemData => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = "draggable-item original-pool-item px-4 py-2 rounded-md shadow-sm hover:bg-blue-300 transition duration-150 ease-in-out";
+                itemDiv.setAttribute('draggable', 'true');
+                itemDiv.dataset.value = itemData.value;
+                itemDiv.textContent = itemData.text;
+                draggableOptionsContainer.appendChild(itemDiv);
+                attachDragListeners(itemDiv); // Attach listeners
+            });
+
+            // Ensure any previously dropped items (which are also draggable) get their listeners re-attached on reset
+            document.querySelectorAll('.dropped-item').forEach(item => {
+                 item.setAttribute('draggable', 'true'); // Make sure it's draggable
+                 attachDragListeners(item);
+            });
+        }
+
+        // --- Drag Event Handlers ---
+        function handleDragStart(e) {
+            draggedItemElement = e.target;
+            e.dataTransfer.setData('text/plain', draggedItemElement.dataset.value); // Store the data-value
+            e.target.classList.add('dragging'); // Add styling for dragging state
+
+            // Determine if the item is from the original pool or from a drop target
+            if (draggedItemElement.classList.contains('original-pool-item')) {
+                draggedItemElement.dataset.isFromPool = 'true';
+            } else {
+                draggedItemElement.dataset.isFromPool = 'false';
+                // If an item is dragged from a drop-target, clear that target immediately
+                const parentTarget = draggedItemElement.parentNode;
+                if (parentTarget.classList.contains('drop-target')) {
+                    parentTarget.innerHTML = '';
+                    delete parentTarget.dataset.filled;
+                    parentTarget.classList.remove('correct', 'incorrect'); // Clear feedback
+                }
+            }
+        }
+
+        function handleDragEnd(e) {
+            e.target.classList.remove('dragging');
+            draggedItemElement = null; // Clear the dragged item reference
+        }
+
+        // --- Helper function to check and apply feedback ---
+        function applyFeedback(target, droppedValue) {
+            const correctAnswer = target.dataset.answer;
+            target.classList.remove('correct', 'incorrect'); // Clear previous feedback
+
+            if (droppedValue === correctAnswer) {
+                target.classList.add('correct');
+            } else {
+                target.classList.add('incorrect');
+            }
+        }
+
+
+        // --- Drop Target Event Listeners ---
+        dropTargets.forEach(target => {
+            target.addEventListener('dragover', (e) => {
+                e.preventDefault(); // Allow dropping
+                if (!target.contains(draggedItemElement)) {
+                    target.classList.add('hover');
+                }
+            });
+
+            target.addEventListener('dragleave', () => {
+                target.classList.remove('hover');
+            });
+
+            target.addEventListener('drop', (e) => {
+                e.preventDefault();
+                target.classList.remove('hover');
+
+                if (draggedItemElement) {
+                    // If target already contains an item, return it to the options pool
+                    if (target.dataset.filled) {
+                        const existingItem = target.querySelector('.dropped-item');
+                        if (existingItem) {
+                            returnToDraggableOptions(existingItem);
+                        }
+                    }
+
+                    target.innerHTML = ''; // Clear target before appending
+                    
+                    let itemToDrop;
+                    if (draggedItemElement.dataset.isFromPool === 'true') {
+                        // If from the original pool, clone it
+                        itemToDrop = draggedItemElement.cloneNode(true);
+                        itemToDrop.removeAttribute('draggable'); // Cloned item in target not directly draggable initially
+                        itemToDrop.classList.remove('original-pool-item', 'draggable-item', 'hover:bg-blue-300', 'dragging');
+                        itemToDrop.classList.add('dropped-item');
+                    } else {
+                        // If from another drop-target, use the actual element that was already removed from its source
+                        itemToDrop = draggedItemElement;
+                        itemToDrop.classList.remove('dragging'); // Remove dragging class
+                    }
+
+                    target.appendChild(itemToDrop);
+                    target.dataset.filled = itemToDrop.dataset.value; // Store what was dropped
+
+                    // Make the item in the target draggable so it can be moved around
+                    itemToDrop.setAttribute('draggable', 'true');
+                    attachDragListeners(itemToDrop); // Attach listeners to the newly placed item
+
+                    // --- Immediate Feedback ---
+                    applyFeedback(target, itemToDrop.dataset.value);
+                }
+            });
+        });
+
+        // --- Helper function to return an item to the draggable options pool ---
+        function returnToDraggableOptions(itemElement) {
+            // Find if an item with the same value already exists in the pool
+            const existingPoolItem = [...draggableOptionsContainer.children].find(
+                item => item.dataset.value === itemElement.dataset.value && item.classList.contains('original-pool-item')
+            );
+
+            // Only add it back if it's not already visibly present in the pool
+            // This prevents duplicates in the pool when cloning is involved.
+            if (!existingPoolItem) {
+                const originalItem = document.createElement('div');
+                originalItem.className = "draggable-item original-pool-item px-4 py-2 rounded-md shadow-sm hover:bg-blue-300 transition duration-150 ease-in-out";
+                originalItem.setAttribute('draggable', 'true');
+                originalItem.dataset.value = itemElement.dataset.value;
+                originalItem.textContent = itemElement.textContent;
+                draggableOptionsContainer.appendChild(originalItem);
+                attachDragListeners(originalItem); // Attach listeners to the new item
+            }
+        }
+
+        // --- Drop onto the draggableOptionsContainer (to remove from a target and return to pool) ---
+        draggableOptionsContainer.addEventListener('dragover', (e) => {
+            e.preventDefault(); // Allow dropping
+            draggableOptionsContainer.classList.add('hover:bg-blue-100'); // Visual feedback
+        });
+
+        draggableOptionsContainer.addEventListener('dragleave', () => {
+            draggableOptionsContainer.classList.remove('hover:bg-blue-100');
+        });
+
+        draggableOptionsContainer.addEventListener('drop', (e) => {
+            e.preventDefault();
+            draggableOptionsContainer.classList.remove('hover:bg-blue-100');
+
+            if (draggedItemElement) {
+                // If the dragged item came from a drop target (not from the pool)
+                if (draggedItemElement.dataset.isFromPool === 'false') {
+                    // It was already removed from its source target in dragstart
+                    // Now, ensure it's added back to the draggable options pool
+                    returnToDraggableOptions(draggedItemElement);
+                }
+                // If it came from the pool and was dropped back on the pool, do nothing, as the original is still there.
+            }
+        });
+
+
+        // --- Check All Answers Button (Final) ---
+        checkAnswersBtn.addEventListener('click', () => {
+            let correctCount = 0;
+            let totalCount = dropTargets.length;
+
+            dropTargets.forEach(target => {
+                const droppedValue = target.dataset.filled;
+                const correctAnswer = target.dataset.answer;
+
+                target.classList.remove('correct', 'incorrect'); // Clear any interim feedback from final check
+
+                if (droppedValue === correctAnswer) {
+                    target.classList.add('correct');
+                    correctCount++;
+                } else {
+                    target.classList.add('incorrect');
+                }
+            });
+
+            alert(`Quiz Complete! You got ${correctCount} out of ${totalCount} answers correct.`);
+        });
+
+        // --- Reset Quiz Button ---
+        resetQuizBtn.addEventListener('click', () => {
+            // Clear all drop targets and their feedback
+            dropTargets.forEach(target => {
+                target.innerHTML = '';
+                delete target.dataset.filled;
+                target.classList.remove('correct', 'incorrect');
+            });
+            setupDraggableItems(); // Re-populate the draggable options pool and re-attach listeners
+        });
+
+        // --- Initial setup ---
+        setupDraggableItems(); // Call this once to set up the initial draggable items and listeners
+    </script>
+</body>
+</html>
